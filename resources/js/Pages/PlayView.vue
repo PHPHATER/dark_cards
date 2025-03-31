@@ -1011,36 +1011,23 @@ export default {
                         for (const card of data.cards)
                             giveCard.bind(this)(data.player, card);
                     }
-                    canBeat = true;
-                    return;
-                case "player_take_table":
-                    return this.takeFromTable(data);
-                case "user_left_room":
-                    return document
-                        .querySelector(`div[data-player="${data.player}"]`)
-                        .parentNode.remove();
-                case "discard_card":
-                    isAttackerPlayer = profile.id == data.attacker_player_index;
-                    this.updateAttacker(data);
-                    const card = document.createElement("img");
-                    card.dataset.player = Object.keys(data.deck.players).find(
-                        (id) => id != profile.id
-                    );
-                    card.dataset.card = data.deck.table.at(-1);
-                    card.src = document.querySelector(
-                        `img[data-cardimg="${card.dataset.card}"]`
-                    ).src;
-                    if (
-                        this.gameCells
-                            .flat()
-                            .some((c) => c.dataset.card == card.dataset.card)
-                    )
-                        return;
-                    return discardCard.bind(this)(card);
-                case "revert_card":
-                    const cardd = this.gameCells
-                        .flat()
-                        .find((c) => c.dataset.card == data.card);
+                    canBeat = true
+                    return
+                case 'player_take_table':
+                    return this.takeFromTable(data)
+                case 'user_left_room':
+                    return document.querySelector(`div[data-player="${data.player}"]`).parentNode.remove()
+                case 'discard_card':
+                    isAttackerPlayer = profile.id == data.attacker_player_index
+                    this.updateAttacker(data)
+                    const card = document.createElement('img')
+                    card.dataset.player = Object.keys(data.deck.players).find(id => id != profile.id)
+                    card.dataset.card = data.deck.table.at(-1)
+                    card.src = document.querySelector(`img[data-cardimg="${card.dataset.card}"]`).src
+                    if (this.gameCells.flat().some(c => c.dataset.card == card.dataset.card)) return
+                    return discardCard.bind(this)(card)
+                case 'revert_card':
+                    const cardd = this.gameCells.flat().find(c => c.dataset.card == data.card)
 
                     const playerr = [
                         ...document.querySelectorAll(
@@ -1292,7 +1279,7 @@ export default {
         }
 
         async function discardCard(card) {
-            const discardIsMine = card.dataset.player == profile.id;
+            const discardIsMine = card.dataset.player == profile.id
             if (!discardIsMine) {
                 const player = [
                     ...document.querySelectorAll(
